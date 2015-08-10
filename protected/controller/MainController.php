@@ -2,7 +2,7 @@
 class MainController extends BaseController
 {
 	function actionIndex(){
-		echo "hello world";
+		$this->hello = "hello, enjoy speed of PHP!";
 	}
 
 
