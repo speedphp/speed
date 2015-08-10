@@ -181,9 +181,9 @@ class Model{
 
 		$sql = ' FROM '.$this->table_name.$conditions["_where"];
 		if(is_array($limit)){
-			if(! $total = $this->query('SELECT COUNT(*) as dw_counter '.$sql, $conditions["_bindParams"]))return null;
+			if(! $total = $this->query('SELECT COUNT(*) as M_COUNTER '.$sql, $conditions["_bindParams"]))return null;
 			$limit = $limit + array(1, 10, 10);
-			$limit = $this->pager($limit[0], $limit[1], $limit[2], $total[0]['dw_counter']);
+			$limit = $this->pager($limit[0], $limit[1], $limit[2], $total[0]['M_COUNTER']);
 			$limit = empty($limit) ? '' : ' LIMIT '.$limit['offset'].','.$limit['limit'];			
 		}else{
 			$limit = !empty($limit) ? ' LIMIT '.$limit : '';
@@ -228,8 +228,8 @@ class Model{
 	
 	public function findCount($conditions){
 		$conditions = $this->_where( $conditions );
-		$count = $this->query("SELECT COUNT(*) AS total FROM ".$this->table_name.$conditions["_where"], $conditions["_bindParams"]);
-		return isset($count[0]['total']) && $count[0]['total'] ? $count[0]['total'] : 0;
+		$count = $this->query("SELECT COUNT(*) AS M_COUNTER FROM ".$this->table_name.$conditions["_where"], $conditions["_bindParams"]);
+		return isset($count[0]['M_COUNTER']) && $count[0]['M_COUNTER'] ? $count[0]['M_COUNTER'] : 0;
 	}
 	
 	public function dumpSql(){return $this->sql;}
