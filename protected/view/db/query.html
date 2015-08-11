@@ -1,0 +1,39 @@
+<p></p>
+<p>SQL查询query</p>
+<p>代码：</p>
+<pre>
+$user = new User();
+$uid = 3;
+// 准备SQL，查询uid大于3的
+$sql = "SELECT * FROM test_user WHERE uid > :uid";
+
+// query第一个参数是SQL语句，第二个参数是绑定参数的列表
+$this->findall = $user->query($sql, array(
+	":uid" => $uid, // 注意这种绑定参数的做法，可以防止SQL注入
+));
+</pre>
+<p>结果：多维数组</p>
+<table class="table">
+	<tr>
+		<th>键</th>
+		<th>值</th>
+	</tr>
+	<{foreach $findall as $k => $v}>
+	<tr>
+		<td><{$k}></td>
+		<td>
+			<table class="table">
+				<{foreach $v as $vk => $vv}>
+				<tr>
+					<td><{$vk}></td>
+					<td><{$vv}></td>
+				</tr>
+				<{/foreach}>
+			</table>
+		</td>
+	</tr>
+	<{/foreach}>
+</table>
+<p>
+	<a href="<{url c='main' a='index'}>">返回到main/index</a>
+</p>

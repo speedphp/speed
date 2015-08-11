@@ -1,0 +1,60 @@
+<p></p>
+<p>SQL查找query</p>
+<p>代码：</p>
+<pre>
+$user = new User();
+// 先查一条，uid为2的
+$this->findone = $user->find(array("uid"=>"2"));
+
+// 查全部，用findAll
+// findAll( $conditions=array(), $order=null, $field='*',  $limit=null )
+// findAll参数：$conditions数组形式的条件（同find），$field指定字段（默认是*），
+// $order是排序（如 “uid DESC”）, $limit是限定条数（如“3,5”，第三条开始取五条）
+$this->findall = $user->findAll();
+</pre>
+<p>结果(find)：一位数组</p>
+<{if !empty($findone)}>
+<table class="table">
+	<tr>
+		<th>键</th>
+		<th>值</th>
+	</tr>
+		<{foreach $findone as $k => $v}>
+		<tr>
+			<td><{$k}></td>
+			<td><{$v}></td>
+		</tr>
+		<{/foreach}>
+</table>
+<{else}>
+<p>没有结果！</p>
+<{/if}>
+<p>结果(findAll)：多维数组</p>
+<{if !empty($findall)}>
+<table class="table">
+	<tr>
+		<th>键</th>
+		<th>值</th>
+	</tr>
+	<{foreach $findall as $k => $v}>
+	<tr>
+		<td><{$k}></td>
+		<td>
+			<table class="table">
+				<{foreach $v as $vk => $vv}>
+				<tr>
+					<td><{$vk}></td>
+					<td><{$vv}></td>
+				</tr>
+				<{/foreach}>
+			</table>
+		</td>
+	</tr>
+	<{/foreach}>
+</table>
+<{else}>
+<p>没有结果！</p>
+<{/if}>
+<p>
+	<a href="<{url c='main' a='index'}>">返回到main/index</a>
+</p>

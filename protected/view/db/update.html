@@ -1,0 +1,17 @@
+<p></p>
+<p>修改数据，影响行数是：<{$result}></p>
+<p>代码：</p>
+<pre>
+$user = new User();
+// 修改uid=2的名字为whoami
+$result = $user->update(array(
+	"uid" => "2" // 条件
+), array(
+	"username" => "whoami" // 修改的内容，键是字段名
+));
+// update返回结果是影响行数，返回0证明查询不到对应条件的数据
+</pre>
+<{include file="db/inner.html"}>
+<p>
+	<a href="<{url c='main' a='index'}>">返回到main/index</a>
+</p>

@@ -1,0 +1,17 @@
+<p></p>
+<p>删除数据，影响行数是：<{$result}></p>
+<p>代码：</p>
+<pre>
+$user = new User();
+// 删除uid为3的行
+$uid = 3;
+// 与insert，update等类似，delete也是输入条件数组
+$this->result = $user->delete(array(
+	"uid" => $uid
+));
+// delete也是返回影响行数，没有匹配的结果会返回0
+</pre>
+<{include file="db/inner.html"}>
+<p>
+	<a href="<{url c='main' a='index'}>">返回到main/index</a>
+</p>
