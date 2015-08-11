@@ -1,0 +1,14 @@
+<p></p>
+<p>
+	<{if $whoami}>
+		接收到参数$whoami：“<{$whoami}>”。
+	<{else}>
+		没有参数哦
+	<{/if}>
+</p>
+<p>
+	本页面的模板是通过display()输出，其实如果模板名称是“控制器名_方法名.html”，那么也可以不写display()，只要有模板存在就自动输出了。
+</p>
+<p>
+	<a href="<{url c='main' a='index'}>">返回到Default/index</a>
+</p>

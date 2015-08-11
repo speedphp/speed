@@ -1,0 +1,23 @@
+<p></p>
+
+<p>
+	这里是多维数据的演示哦！
+	<ul>
+		<{foreach $data as $k => $v}>
+			<{if is_array($v)}> <{**如果是多维的**}>
+				<ol>
+					<{foreach $v as $vv}>
+						<li><{$vv}></li>
+					<{/foreach}>
+				</ol>
+				
+			<{else}>
+				<li><{$k}>：<{$v}></li>
+		
+			<{/if}>
+		<{/foreach}>
+	</ul>
+</p>
+<p>
+	<a href="<{url c='default' a='index'}>">返回到Default/index</a>
+</p>
