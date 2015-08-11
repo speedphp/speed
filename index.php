@@ -1,3 +1,3 @@
 <?php
-define('APP_DIR','./');
-require(APP_DIR.'protected/lib/speed.php');
+define('APP_DIR', realpath('./'));
+require(APP_DIR.'/protected/lib/speed.php');
