@@ -1,0 +1,55 @@
+SpeedPHP框架是遵循BSD许可证发布的开源软件
+
+BSD许可证参考 http://www.opensource.org/licenses/bsd-license.php（英文）
+维基中文对BSD许可证的解释：http://zh.wikipedia.org/wiki/BSD许可证
+
+使用限制（通俗版）
+
+简单而言，SpeedPHP框架可用于商业用途以及自由使用（修改，再发布），仅有以下两项使用限制：
+在使用SpeedPHP框架的系统源代码中，需要附带上SpeedPHP的LICENSE说明。
+需要使用 SpeedPHP框架 / speedphp.com 字样作商业推广时，务必告知本站。
+
+BSD开源协议的使用
+
+BSD开源协议是一个给于使用者很大自由的协议。基本上使用者可以”为所欲为”，可以自由的使用，修改源代码，也可以将修改后的代码作为开源或者专有软件再发布。
+
+但”为所欲为”的前提当你发布使用了BSD协议的代码，或则以BSD协议代码为基础做二次开发自己的产品时，需要满足三个条件：
+
+如果再发布的产品中包含源代码，则在源代码中必须带有原来代码中的BSD协议。
+如果再发布的只是二进制类库/软件，则需要在类库/软件的文档和版权声明中包含原来代码中的BSD协议。
+不可以用开源代码的作者/机构名字和原来产品的名字做市场推广。
+
+BSD 代码鼓励代码共享，但需要尊重代码作者的著作权。BSD由于允许使用者修改和重新发布代码，也允许使用或在BSD代码上开发商业软件发布和销售，因此是对商业集成很友好的协议。而很多的公司企业在选用开源产品的时候都首选BSD协议，因为可以完全控制这些第三方的代码，在必要的时候可以修改或者二次开发。
+
+SpeedPHP开源协议
+
+Copyright (c) 2010, speedphp.com
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+Neither the name of the speedphp.com nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+THIS SOFTWARE IS PROVIDED BY THE speedphp.com AND CONTRIBUTORS "AS IS" AND ANY
+EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE speedphp.com AND CONTRIBUTORS BE LIABLE FOR ANY
+DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+著作权由speedphp.com所有。
+这份授权条款，在使用者符合以下三条件的情形下，授予使用者使用及再散播本
+软件包装原始码及二进位可执行形式的权利，无论此包装是否经改作皆然：
+对于本软件源代码的再散播，必须保留上述的版权宣告、此三条件表列，以及下述的免责声明。
+对于本套件二进位可执行形式的再散播，必须连带以文件以及／或者其他附于散播包装中的媒介方式，重制上述之版权宣告、此三条件表列，以及下述的免责声明。
+未获事前取得书面许可，不得使用speedphp.com或本软件贡献者之名称，来为本软件之衍生物做任何表示支持、认可或推广、促销之行为。
+免责声明：本软件是由speedphp.com及本软件之贡献者以现状（"as is"）提供，
+本软件包装不负任何明示或默示之担保责任，包括但不限于就适售性以及特定目
+的的适用性为默示性担保。speedphp.com及本软件之贡献者，无论任何条件、
+无论成因或任何责任主义、无论此责任为因合约关系、无过失责任主义或因非违
+约之侵权（包括过失或其他原因等）而起，对于任何因使用本软件包装所产生的
+任何直接性、间接性、偶发性、特殊性、惩罚性或任何结果的损害（包括但不限
+于替代商品或劳务之购用、使用损失、资料损失、利益损失、业务中断等等），
+不负任何责任，即在该种使用已获事前告知可能会造成此类损害的情形下亦然。
