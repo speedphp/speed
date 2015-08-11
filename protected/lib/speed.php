@@ -468,7 +468,7 @@ function _err_handle($errno, $errstr, $errfile, $errline){
 	if($errno == E_WARNING)$msg = "WARNING";
 	if($errno == E_NOTICE)$msg = "NOTICE";
 	if($errno == E_STRICT)$msg = "STRICT";
-	if($errno == E_DEPRECATED)$msg = "DEPRECATED";
+	if($errno == 8192)$msg = "DEPRECATED";
 	err("$msg: $errstr in $errfile on line $errline");
 }
 function err($msg){
