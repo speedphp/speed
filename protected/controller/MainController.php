@@ -1,6 +1,5 @@
 <?php
-class MainController extends BaseController
-{
+class MainController extends BaseController {
 	// 首页
 	function actionIndex(){
 		// 连个hello world都木有？
@@ -10,8 +9,7 @@ class MainController extends BaseController
 	
 	// 接收提交表单
 	function actionReceive(){
-		// dump($_POST); 
-		// 把提交的数据先dump出来看看是良好的习惯。
+		// 把提交的数据先dump($_POST)出来看看是良好的习惯。
 		
 		if(isset($_POST["username"])){
 			echo "已经提交了".$_POST["username"];

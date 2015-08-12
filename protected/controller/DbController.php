@@ -1,6 +1,5 @@
 <?php
-class DbController extends BaseController
-{
+class DbController extends BaseController {
 	// 增加数据create
 	function actionCreate(){
 		// 准备数据，一个“字段名”对应“值”的数组

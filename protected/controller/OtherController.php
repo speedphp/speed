@@ -1,6 +1,5 @@
 <?php
-class OtherController extends BaseController
-{
+class OtherController extends BaseController {
 	// 这里先构造点数据
 	var $fakedata = array(
 		"title" => "静夜思",

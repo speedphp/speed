@@ -1,6 +1,5 @@
 <?php
-class MainController extends BaseController
-{
+class MainController extends BaseController{
 	function actionIndex(){
 		echo "hello admin!";
 	}

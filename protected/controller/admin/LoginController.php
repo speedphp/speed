@@ -1,6 +1,5 @@
 <?php
-class LoginController extends BaseController
-{
+class LoginController extends BaseController{
 	function actionIndex(){
 		echo "hello login!";
 	}
