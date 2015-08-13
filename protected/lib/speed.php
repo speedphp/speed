@@ -370,6 +370,7 @@ class View{
 		
 		$file = $t_dir.DS.$tempalte_name;
 		if(!file_exists($file)) $this->err('Err: "'.$file.'" is not exists!');
+		if(!is_writable($c_dir) || !is_readable($c_dir))err('Err: Directory "'.$this->compile_dir.'" is not writable or readable');
 
 		$complied_file = $c_dir.DS.md5(realpath($file)).'.'.filemtime($file).'.'.basename($tempalte_name).'.php';
 		if(file_exists($complied_file))return $complied_file;
