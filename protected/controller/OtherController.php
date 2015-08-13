@@ -1,7 +1,7 @@
 <?php
 class OtherController extends BaseController {
 	// 这里先构造点数据
-	var $fakedata = array(
+	public $fakedata = array(
 		"title" => "静夜思",
 		"code"  => array(
 			"one"   => "床前明月光",
