@@ -365,14 +365,11 @@ class View{
 	}
 
 	public function compile($tempalte_name){
-		$t_dir = realpath($this->template_dir);
-		$c_dir = realpath($this->compile_dir);
-		
-		$file = $t_dir.DS.$tempalte_name;
+		$file = $this->template_dir.DS.$tempalte_name;
 		if(!file_exists($file)) $this->err('Err: "'.$file.'" is not exists!');
-		if(!is_writable($c_dir) || !is_readable($c_dir))err('Err: Directory "'.$this->compile_dir.'" is not writable or readable');
+		if(!is_writable($this->compile_dir) || !is_readable($this->compile_dir)) $this->err('Err: Directory "'.$this->compile_dir.'" is not writable or readable');
 
-		$complied_file = $c_dir.DS.md5(realpath($file)).'.'.filemtime($file).'.'.basename($tempalte_name).'.php';
+		$complied_file = $this->compile_dir.DS.md5(realpath($file)).'.'.filemtime($file).'.'.basename($tempalte_name).'.php';
 		if(file_exists($complied_file))return $complied_file;
 
 		$template_data = file_get_contents($file); 
@@ -380,7 +377,7 @@ class View{
 		$template_data = $this->_compile_function($template_data);
 		$template_data = '<?php if(!class_exists("View", false)) exit("no direct access allowed");?>'.$template_data;
 		
-		$this->_clear_compliedfile($c_dir, $t_dir, $tempalte_name);
+		$this->_clear_compliedfile($tempalte_name);
 		file_put_contents($complied_file, $template_data);
 		
 		return $complied_file;
@@ -450,13 +447,13 @@ class View{
 		return '<?php echo '.$matches[1].'('.$params.');?>';
 	}
 
-	private function _clear_compliedfile($c_dir, $t_dir, $tempalte_name){
-		$dir = scandir($c_dir);
+	private function _clear_compliedfile($tempalte_name){
+		$dir = scandir($this->compile_dir);
 		if($dir){
-			$part = md5(realpath($t_dir.DS.$tempalte_name));
+			$part = md5(realpath($this->template_dir.DS.$tempalte_name));
 			foreach($dir as $d){
 				if(substr($d, 0, strlen($part)) == $part){
-					@unlink($c_dir.DS.$d);
+					@unlink($this->compile_dir.DS.$d);
 				}
 			}
 		}
