@@ -412,8 +412,8 @@ class View{
 			'<{break}>'               => '<?php break; ?>',
 			'<{continue}>'            => '<?php continue; ?>',
 			'<{\/if}>'                => '<?php endif; ?>',
-			'<{foreach\s*(\$[\w\_\"\'\[\]]+\b)\s*as(\s*)\$([\w\_\"\'\[\]]+\b)}>' => $foreach_inner_before.'<?php foreach( $1 as $$3 ) : ?>'.$foreach_inner_after,
-			'<{foreach\s*(\$[\w\_\"\'\[\]]+\b)\s*as\s*(\$[\w\_\"\'\[\]]+\b)\s*=>\s*\$([\w\_\"\'\[\]]+\b)}>'  => $foreach_inner_before.'<?php foreach( $1 as $2 => $$3 ) : ?>'.$foreach_inner_after,
+			'<{foreach\s*(\$[\w\.\_\"\'\[\]]+?)\s*as(\s*)\$([\w\_\"\'\[\]]+?)}>' => $foreach_inner_before.'<?php foreach( $1 as $$3 ) : ?>'.$foreach_inner_after,
+			'<{foreach\s*(\$[\w\.\_\"\'\[\]]+?)\s*as\s*(\$[\w\_\"\'\[\]]+?)\s*=>\s*\$([\w\_\"\'\[\]]+?)}>'  => $foreach_inner_before.'<?php foreach( $1 as $2 => $$3 ) : ?>'.$foreach_inner_after,
 			'<{\/foreach}>'           => '<?php endforeach; ?>',
 			'<{include\s*file=(.+?)}>'=> '<?php include $_view_obj->compile($1); ?>',
 		);
