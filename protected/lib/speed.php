@@ -434,7 +434,10 @@ class View{
 	}
 	
 	private function _compile_function_callback( $matches ){
-		if(empty($matches[2]))return '<?php echo sview_'.$matches[1].'();?>';
+		if(empty($matches[2]))return '<?php echo '.$matches[1].'();?>';
+		$sysfunc = preg_replace('/\((.*)\)\s*$/', '<?php echo '.$matches[1].'($1);?>', $matches[2], -1, $count);
+		if($count)return $sysfunc;
+		
 		$pattern_inner = '/\b([\w_]+?)\s*=\s*(\$[\w\"\'\]\[\-_>]+|"[^"\\\\]*(?:\\\\.[^"\\\\]*)*"|\'[^\'\\\\]*(?:\\\\.[^\'\\\\]*)*\')\s*?/'; 
 		$params = "";
 		if(preg_match_all($pattern_inner, $matches[2], $matches_inner, PREG_SET_ORDER)){
