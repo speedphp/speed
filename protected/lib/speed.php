@@ -366,8 +366,8 @@ class View{
 
 	public function compile($tempalte_name){
 		$file = $this->template_dir.DS.$tempalte_name;
-		if(!file_exists($file)) $this->err('Err: "'.$file.'" is not exists!');
-		if(!is_writable($this->compile_dir) || !is_readable($this->compile_dir)) $this->err('Err: Directory "'.$this->compile_dir.'" is not writable or readable');
+		if(!file_exists($file)) err('Err: "'.$file.'" is not exists!');
+		if(!is_writable($this->compile_dir) || !is_readable($this->compile_dir)) err('Err: Directory "'.$this->compile_dir.'" is not writable or readable');
 
 		$complied_file = $this->compile_dir.DS.md5(realpath($file)).'.'.filemtime($file).'.'.basename($tempalte_name).'.php';
 		if(file_exists($complied_file))return $complied_file;
@@ -381,14 +381,6 @@ class View{
 		file_put_contents($complied_file, $template_data);
 		
 		return $complied_file;
-	}
-	
-	public function err($msg){
-		if(function_exists('err')){
-			err($msg);
-		}else{
-			throw new Exception($msg);
-		}
 	}
 
 	private function _compile_struct($template_data){
@@ -438,7 +430,7 @@ class View{
 			foreach($matches_inner as $m)$params .= '\''. $m[1]."'=>".$m[2].", ";
 			$params .= ")";
 		}else{
-			$this->err('Err: Parameters of \''.$matches[1].'\' is incorrect!');
+			err('Err: Parameters of \''.$matches[1].'\' is incorrect!');
 		}
 		return '<?php echo '.$matches[1].'('.$params.');?>';
 	}
