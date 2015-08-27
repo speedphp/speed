@@ -390,13 +390,6 @@ class View{
 			throw new Exception($msg);
 		}
 	}
-	
-	private function _foreach_inner($val){
-		return array(
-			"before" => '<?php $_foreach_'.$val.'_counter = 0; $_foreach_'.$val.'_total = count($1);?>',
-			"after"  => '<?php $_foreach_'.$val.'_index = $_foreach_'.$val.'_counter;$_foreach_'.$val.'_iteration = $_foreach_'.$val.'_counter + 1;$_foreach_'.$val.'_first = ($_foreach_'.$val.'_counter == 0);$_foreach_'.$val.'_last = ($_foreach_'.$val.'_counter == $_foreach_'.$val.'_total);?>',
-		);
-	}
 
 	private function _compile_struct($template_data){
 		$foreach_inner_before = '<?php $_foreach_$3_counter = 0; $_foreach_$3_total = count($1);?>';
