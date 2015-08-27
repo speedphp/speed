@@ -181,6 +181,7 @@ class Model{
 
 		$sql = ' FROM '.$this->table_name.$conditions["_where"];
 		if(is_array($limit)){
+			$total = $this->query('SELECT COUNT(*) as M_COUNTER '.$sql, $conditions["_bindParams"]);
 			$limit = $limit + array(1, 10, 10);
 			$limit = $this->pager($limit[0], $limit[1], $limit[2], $total[0]['M_COUNTER']);
 			$limit = empty($limit) ? '' : ' LIMIT '.$limit['offset'].','.$limit['limit'];			
