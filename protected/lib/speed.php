@@ -393,6 +393,7 @@ class View{
 			'<{(\$[\S]+?)\snofilter\s*}>'          => '<?php echo $1; ?>',
 			'<{(\$[\S]+?)}>'          => '<?php echo htmlspecialchars($1, ENT_QUOTES, "UTF-8"); ?>',
 			'<{if\s*(.+?)}>'          => '<?php if ($1) : ?>',
+			'<{else\s*if\s*(.+?)}>'   => '<?php elseif ($1) : ?>',
 			'<{else}>'                => '<?php else : ?>',
 			'<{break}>'               => '<?php break; ?>',
 			'<{continue}>'            => '<?php continue; ?>',

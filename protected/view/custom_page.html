@@ -2,6 +2,8 @@
 <p>
 	<{if $whoami}>
 		接收到参数$whoami：“<{$whoami}>”。
+	<{else if $whoami == "yes"}>
+		whoami = yes
 	<{else}>
 		没有参数哦
 	<{/if}>
