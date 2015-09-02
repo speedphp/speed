@@ -51,7 +51,6 @@ if(!is_available_classname($__controller))err("Err: Controller name '$__controll
 
 spl_autoload_register('inner_autoload');
 function inner_autoload($class){
-    if (class_exists($class, false) || interface_exists($class, false)) return;
 	GLOBAL $__module;
 	foreach(array('model', 'include', 'controller'.(empty($__module)?'':DS.$__module)) as $dir){
 		$file = APP_DIR.DS.'protected'.DS.$dir.DS.$class.'.php';
