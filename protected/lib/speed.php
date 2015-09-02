@@ -57,13 +57,20 @@ function inner_autoload($class){
 		$file = APP_DIR.DS.'protected'.DS.$dir.DS.$class.'.php';
 		if(file_exists($file)){
 			include $file;
-			break;
+			return;
+		}
+		$lowerfile = strtolower($file);
+		foreach(glob(APP_DIR.DS.'protected'.DS.$dir.DS.'*.php') as $file){
+			if(strtolower($file) === $lowerfile){
+				include $file;
+				return;
+			}
 		}
 	}
 }
 
-$controller_name = ucfirst($__controller).'Controller';
-$action_name = 'action'.ucfirst($__action);
+$controller_name = $__controller.'Controller';
+$action_name = 'action'.$__action;
 if(!class_exists($controller_name, true)) err("Err: Controller '$controller_name' is not exists!");
 $controller_obj = new $controller_name();
 if(!method_exists($controller_obj, $action_name)) err("Err: Method '$action_name' of '$controller_name' is not exists!");
