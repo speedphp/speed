@@ -397,6 +397,7 @@ class View{
 			'(<{[\s\S]*?)(\$[^\.\s]+?)\.(\w+)+\b([\s\S]*?}>)'                       => "$1$2['$3']$4",
 			'(<{[\s\S]*?)(\$(\w+)@(index|iteration|first|last|total))+([\s\S]*?}>)' => '$1$_foreach_$3_$4$5',
 			'<{(\$[\S]+?)\snofilter\s*}>'          => '<?php echo $1; ?>',
+			'<{(\$[\S]+?)\s*=(.*?)\s*}>'           => '<?php $1 =$2; ?>',
 			'<{(\$[\S]+?)}>'          => '<?php echo htmlspecialchars($1, ENT_QUOTES, "UTF-8"); ?>',
 			'<{if\s*(.+?)}>'          => '<?php if ($1) : ?>',
 			'<{else\s*if\s*(.+?)}>'   => '<?php elseif ($1) : ?>',
