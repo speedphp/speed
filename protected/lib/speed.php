@@ -394,8 +394,8 @@ class View{
 		$foreach_inner_after  = '<?php $_foreach_$3_index = $_foreach_$3_counter;$_foreach_$3_iteration = $_foreach_$3_counter + 1;$_foreach_$3_first = ($_foreach_$3_counter == 0);$_foreach_$3_last = ($_foreach_$3_counter == $_foreach_$3_total);$_foreach_$3_counter++;?>';
 		$pattern_map = array(
 			'<{\*([\s\S]+?)\*}>'      => '<?php /* $1*/?>',
-			'(<{[\s\S]*?)(\$[^\.\s]+?)\.(\w+)+\b([\s\S]*?}>)'                       => "$1$2['$3']$4",
-			'(<{[\s\S]*?)(\$(\w+)@(index|iteration|first|last|total))+([\s\S]*?}>)' => '$1$_foreach_$3_$4$5',
+			'(<{.*)(\$[^\.\s]+?)\.(\w+)+\b(.*}>)'                       => "$1$2['$3']$4",
+			'(<{.*?)(\$(\w+)@(index|iteration|first|last|total))+(.*?}>)' => '$1$_foreach_$3_$4$5',
 			'<{(\$[\S]+?)\snofilter\s*}>'          => '<?php echo $1; ?>',
 			'<{(\$[\S]+?)\s*=(.*?)\s*}>'           => '<?php $1 =$2; ?>',
 			'<{(\$[\S]+?)}>'          => '<?php echo htmlspecialchars($1, ENT_QUOTES, "UTF-8"); ?>',
