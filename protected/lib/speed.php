@@ -431,7 +431,7 @@ class View{
 		$sysfunc = preg_replace('/\((.*)\)\s*$/', '<?php echo '.$matches[1].'($1);?>', $matches[2], -1, $count);
 		if($count)return $sysfunc;
 		
-		$pattern_inner = '/\b([\w_]+?)\s*=\s*(\$[\w\"\'\]\[\-_>]+|"[^"\\\\]*(?:\\\\.[^"\\\\]*)*"|\'[^\'\\\\]*(?:\\\\.[^\'\\\\]*)*\')\s*?/'; 
+		$pattern_inner = '/\b([\w_]+?)\s*=\s*(\$[\w"\'\]\[\-_>\$]+|"[^"\\\\]*(?:\\\\.[^"\\\\]*)*"|\'[^\'\\\\]*(?:\\\\.[^\'\\\\]*)*\')\s*?/'; 
 		$params = "";
 		if(preg_match_all($pattern_inner, $matches[2], $matches_inner, PREG_SET_ORDER)){
 			$params = "array(";
