@@ -263,11 +263,8 @@ class Model{
 				$this->page['all_pages'] = range(1, $total_page);
 			}elseif( $page <= $scope/2) {
 				$this->page['all_pages'] = range(1, $scope);
-			}elseif( $page <= $total_page - $scope/2 ){
-				$right = $page + (int)($scope/2);
-				$this->page['all_pages'] = range($right-$scope+1, $right);
 			}else{
-				$this->page['all_pages'] = range($total_page-$scope+1, $total_page);
+				$this->page['all_pages'] = range($page - $scope/2 , min( $page + $scope/2 -1,  $total_page));
 			}
 		}
 		return $this->page;
