@@ -1,4 +1,5 @@
 <?php
+
 define('SPEED_VER', '0.1');
 set_error_handler("_err_handle");
 defined('DS') or define('DS', DIRECTORY_SEPARATOR);
@@ -68,11 +69,21 @@ function inner_autoload($class){
 	}
 }
 
+ function templeate(){
+		return "这是是函数";
+}
+
 $controller_name = $__controller.'Controller';
-$action_name = 'action'.$__action;
+$httpMethod =strtolower($_SERVER['REQUEST_METHOD']) ;
+$action_name = $httpMethod.ucfirst($__action);
+
 if(!class_exists($controller_name, true)) err("Err: Controller '$controller_name' is not exists!");
 $controller_obj = new $controller_name();
-if(!method_exists($controller_obj, $action_name)) err("Err: Method '$action_name' of '$controller_name' is not exists!");
+
+if(!method_exists($controller_obj, $action_name)){
+	$action_name = 'action'.$__action;
+	if(!method_exists($controller_obj, $action_name)) err("Err: Method '$action_name' of '$controller_name' is not exists!");
+};
 
 $controller_obj->$action_name();
 if($controller_obj->_auto_display){
@@ -194,7 +205,7 @@ class Model{
 		}else{
 			$limit = !empty($limit) ? ' LIMIT '.$limit : '';
 		}
-		return $this->query('SELECT '. $fields . $sql . $sort . $limit, $conditions["_bindParams"]);
+        return $this->query('SELECT '. $fields . $sql . $sort . $limit, $conditions["_bindParams"]);
 	}
 	
 	public function find($conditions = array(), $sort = null, $fields = '*'){
@@ -263,11 +274,8 @@ class Model{
 				$this->page['all_pages'] = range(1, $total_page);
 			}elseif( $page <= $scope/2) {
 				$this->page['all_pages'] = range(1, $scope);
-			}elseif( $page <= $total_page - $scope/2 ){
-				$right = $page + (int)($scope/2);
-				$this->page['all_pages'] = range($right-$scope+1, $right);
 			}else{
-				$this->page['all_pages'] = range($total_page-$scope+1, $total_page);
+				$this->page['all_pages'] = range($page - $scope/2 , min( $page + $scope/2 -1,  $total_page));
 			}
 		}
 		return $this->page;
@@ -466,7 +474,7 @@ function _err_handle($errno, $errstr, $errfile, $errline){
 }
 function err($msg){
 	$traces = debug_backtrace();
-	if(!$GLOBALS['debug']){
+	if(false){
 		if(!empty($GLOBALS['err_handler'])){
 			call_user_func($GLOBALS['err_handler'], $msg, $traces);
 		}else{
