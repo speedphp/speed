@@ -457,6 +457,7 @@ class View{
 }
 
 function _err_handle($errno, $errstr, $errfile, $errline){
+	if(0 === error_reporting())return false;
 	$msg = "ERROR";
 	if($errno == E_WARNING)$msg = "WARNING";
 	if($errno == E_NOTICE)$msg = "NOTICE";
