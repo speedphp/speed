@@ -206,7 +206,7 @@ class Model{
 		$values = array();
 		foreach ($row as $k=>$v){
 			$values[":M_UPDATE_".$k] = $v;
-			$setstr[] = $k."=".":M_UPDATE_".$k;
+			$setstr[] = "`{$k}` = ".":M_UPDATE_".$k;
 		}
 		$conditions = $this->_where( $conditions );
 		return $this->execute("UPDATE ".$this->table_name." SET ".implode(', ', $setstr).$conditions["_where"], $conditions["_bindParams"] + $values);
@@ -226,7 +226,7 @@ class Model{
 	public function create($row){
 		$values = array();
 		foreach($row as $k=>$v){
-			$keys[] = $k; $values[":".$k] = $v; $marks[] = ":".$k;
+			$keys[] = "`{$k}`"; $values[":".$k] = $v; $marks[] = ":".$k;
 		}
 		$this->execute("INSERT INTO ".$this->table_name." (".implode(', ', $keys).") VALUES (".implode(', ', $marks).")", $values);
 		return $this->_master_db->lastInsertId();
