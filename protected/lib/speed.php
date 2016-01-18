@@ -155,7 +155,10 @@ class Controller{
 	public function __set($name, $value){$this->_data[$name] = $value;}
 	
 	public function display($tpl_name, $return = false){
-		if(!$this->_v) $this->_v = new View(APP_DIR.DS.'protected'.DS.'view', APP_DIR.DS.'protected'.DS.'tmp');
+		if(!$this->_v){
+			$compile_dir = isset($GLOBALS['view']['compile_dir']) ? $GLOBALS['view']['compile_dir'] : APP_DIR.DS.'protected'.DS.'tmp';
+			$this->_v = new View(APP_DIR.DS.'protected'.DS.'view', $compile_dir);
+		}
 		$this->_v->assign(get_object_vars($this));
 		$this->_v->assign($this->_data);
 		if($this->layout){
