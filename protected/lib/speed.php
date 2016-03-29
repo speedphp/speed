@@ -70,11 +70,22 @@ function inner_autoload($class){
 
 $controller_name = $__controller.'Controller';
 $action_name = 'action'.$__action;
-if(!class_exists($controller_name, true)) err("Err: Controller '$controller_name' is not exists!");
-$controller_obj = new $controller_name();
-if(!method_exists($controller_obj, $action_name)) err("Err: Method '$action_name' of '$controller_name' is not exists!");
 
+if(!method_exists($controller_name, $action_name)) {
+	if(!method_exists('BaseController', 'err404')){
+		if(!class_exists($controller_name, true)) {
+			err("Err: Controller '$controller_name' is not exists!");
+		}else{
+			err("Err: Method '$action_name' of '$controller_name' is not exists!");
+		}
+	}else{
+		BaseController::err404($__controller, $__action);
+	}
+}
+
+$controller_obj = new $controller_name();
 $controller_obj->$action_name();
+
 if($controller_obj->_auto_display){
 	$auto_tpl_name = (empty($__module) ? '' : $__module.DS).$__controller.'_'.$__action.'.html';
 	if(file_exists(APP_DIR.DS.'protected'.DS.'view'.DS.$auto_tpl_name))$controller_obj->display($auto_tpl_name);
