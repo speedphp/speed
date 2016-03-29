@@ -483,6 +483,7 @@ function _err_handle($errno, $errstr, $errfile, $errline){
 function err($msg){
 	$traces = debug_backtrace();
 	if(!$GLOBALS['debug']){
+		header('HTTP/1.1 500 Internal Server Error');
 		if(!empty($GLOBALS['err_handler'])){
 			call_user_func($GLOBALS['err_handler'], $msg, $traces);
 		}else{
