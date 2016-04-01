@@ -191,8 +191,6 @@ class Model{
 	public $page;
 	public $table_name;
 	
-	private $_master_db;
-	private $_slave_db;
 	private $sql = array();
 	
 	public function __construct($table_name = null){if($table_name)$this->table_name = $table_name;}
@@ -244,7 +242,7 @@ class Model{
 			$keys[] = "`{$k}`"; $values[":".$k] = $v; $marks[] = ":".$k;
 		}
 		$this->execute("INSERT INTO ".$this->table_name." (".implode(', ', $keys).") VALUES (".implode(', ', $marks).")", $values);
-		return $this->_master_db->lastInsertId();
+		return $this->dbInstance($GLOBALS['mysql'], 'master')->lastInsertId();
 	}
 	
 	public function findCount($conditions){
@@ -289,42 +287,27 @@ class Model{
 	}
 	
 	public function query($sql, $params = array()){return $this->execute($sql, $params, true);}
-	public function execute($sql, $params = array(), $is_query = false){
+	public function execute($sql, $params = array(), $readonly = false){
 		$this->sql[] = $sql;
 
-		if($is_query && is_object($this->_slave_db)){
-			$sth = $this->_slave_db->prepare($sql);
+		if($readonly && !empty($GLOBALS['mysql']['MYSQL_SLAVE'])){
+			$slave_key = array_rand($GLOBALS['mysql']['MYSQL_SLAVE']);
+			$sth = $this->dbInstance($GLOBALS['mysql']['MYSQL_SLAVE'][$slave_key], 'slave_'.$slave_key)->prepare($sql);
 		}else{
-			if(!is_object($this->_master_db))$this->setDB('default');
-			$sth = $this->_master_db->prepare($sql);
+			$sth = $this->dbInstance($GLOBALS['mysql'], 'master')->prepare($sql);
 		}
 		
 		if(is_array($params) && !empty($params)){
 			foreach($params as $k=>&$v) $sth->bindParam($k, $v);
 		}
 
-		if($sth->execute())return $is_query ? $sth->fetchAll(PDO::FETCH_ASSOC) : $sth->rowCount();
+		if($sth->execute())return $readonly ? $sth->fetchAll(PDO::FETCH_ASSOC) : $sth->rowCount();
 		$err = $sth->errorInfo();
 		err('Database SQL: "' . $sql. '", ErrorInfo: '. $err[2], 1);
 	}
-
-	public function setDB($db_config_key = 'default', $is_readonly = false){
-		if('default' == $db_config_key){
-			$db_config = $GLOBALS['mysql'];
-		}else if(!empty($GLOBALS['mysql'][$db_config_key])){
-			$db_config = $GLOBALS['mysql'][$db_config_key];
-		}else{
-			err("Database Err: Db config '$db_config_key' is not exists!");
-		}
-		if($is_readonly){
-			$this->_slave_db = $this->_db_instance($db_config, $db_config_key);
-		}else{
-			$this->_master_db = $this->_db_instance($db_config, $db_config_key);
-		}
-	}
 	
-	private function _db_instance($db_config, $db_config_key){
-		if(empty($GLOBALS['mysql_instances'][$db_config_key])){
+	public function dbInstance($db_config, $db_config_key, $force_replace = false){
+		if($force_replace || empty($GLOBALS['mysql_instances'][$db_config_key])){
 			try {
 				$GLOBALS['mysql_instances'][$db_config_key] = new PDO('mysql:dbname='.$db_config['MYSQL_DB'].';host='.$db_config['MYSQL_HOST'].';port='.$db_config['MYSQL_PORT'], $db_config['MYSQL_USER'], $db_config['MYSQL_PASS'], array(PDO::MYSQL_ATTR_INIT_COMMAND=>'SET NAMES \''.$db_config['MYSQL_CHARSET'].'\''));
 			}catch(PDOException $e){err('Database Err: '.$e->getMessage());}
