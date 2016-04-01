@@ -155,6 +155,16 @@ function is_available_classname($name){
 	return preg_match('/[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*/', $name);
 }
 
+function arg($name = null, $default = null) {
+	if($name){
+		if(!isset($_REQUEST[$name]))return $default;
+		$arg = $_REQUEST[$name];
+	}else{
+		$arg = $_REQUEST;
+	}
+	return $arg;
+}
+
 class Controller{
 	public $layout;
 	public $_auto_display = true;
