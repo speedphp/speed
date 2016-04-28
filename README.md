@@ -27,7 +27,7 @@ PHP框架真的要用尽Java的23种设计模式，才能开发项目？
 
 下载地址：https://github.com/SpeedPHP/speed/archive/master.zip
 
-使用方法：http://www.speedphp.com/thread-4826-1-1.html
+使用方法：https://github.com/SpeedPHP/manual/blob/master/README.md
 
 问题反馈：http://www.speedphp.com/thread-4827-1-1.html
 
