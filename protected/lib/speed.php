@@ -476,6 +476,7 @@ function _err_handle($errno, $errstr, $errfile, $errline){
 	err("$msg: $errstr in $errfile on line $errline");
 }
 function err($msg){
+	$msg = htmlspecialchars($msg);
 	$traces = debug_backtrace();
 	if(!$GLOBALS['debug']){
 		header('HTTP/1.1 500 Internal Server Error');
