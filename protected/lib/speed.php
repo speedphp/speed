@@ -43,12 +43,6 @@ $__module     = isset($_REQUEST['m']) ? strtolower($_REQUEST['m']) : '';
 $__controller = isset($_REQUEST['c']) ? strtolower($_REQUEST['c']) : 'main';
 $__action     = isset($_REQUEST['a']) ? strtolower($_REQUEST['a']) : 'index';
 
-if(!empty($__module)){
-	if(!is_available_classname($__module))err("Err: Module name '$__module' is not correct!");
-	if(!is_dir(APP_DIR.DS.'protected'.DS.'controller'.DS.$__module))err("Err: Module '$__module' is not exists!");
-}
-if(!is_available_classname($__controller))err("Err: Controller name '$__controller' is not correct!");
-
 spl_autoload_register('inner_autoload');
 function inner_autoload($class){
 	GLOBAL $__module;
@@ -71,17 +65,13 @@ function inner_autoload($class){
 $controller_name = $__controller.'Controller';
 $action_name = 'action'.$__action;
 
-if(!method_exists($controller_name, $action_name)) {
-	if(!method_exists('BaseController', 'err404')){
-		if(!class_exists($controller_name, true)) {
-			err("Err: Controller '$controller_name' is not exists!");
-		}else{
-			err("Err: Method '$action_name' of '$controller_name' is not exists!");
-		}
-	}else{
-		BaseController::err404($__controller, $__action);
-	}
+if(!empty($__module)){
+	if(!is_available_classname($__module))_err_router("Err: Module '$__module' is not correct!");
+	if(!is_dir(APP_DIR.DS.'protected'.DS.'controller'.DS.$__module))_err_router("Err: Module '$__module' is not exists!");
 }
+if(!is_available_classname($__controller))_err_router("Err: Controller '$controller_name' is not correct!");
+if(!class_exists($controller_name, true))_err_router("Err: Controller '$controller_name' is not exists!");
+if(!method_exists($controller_name, $action_name))_err_router("Err: Method '$action_name' of '$controller_name' is not exists!");
 
 $controller_obj = new $controller_name();
 $controller_obj->$action_name();
@@ -465,7 +455,14 @@ class View{
 		}
 	}
 }
-
+function _err_router($msg){
+	Global $__module, $__controller, $__action;
+	if(!method_exists('BaseController', 'err404')){
+		err($msg);
+	}else{
+		BaseController::err404($__module, $__controller, $__action, $msg);
+	}
+}
 function _err_handle($errno, $errstr, $errfile, $errline){
 	if(0 === error_reporting())return false;
 	$msg = "ERROR";
