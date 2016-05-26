@@ -384,8 +384,15 @@ class View{
 		$template_data = '<?php if(!class_exists("View", false)) exit("no direct access allowed");?>'.$template_data;
 		
 		$this->_clear_compliedfile($tempalte_name);
-		file_put_contents($complied_file, $template_data);
-		
+		$tmp_file = $complied_file.uniqid('_tpl', true);
+		if (!file_put_contents($tmp_file, $template_data)) err('Err: File "'.$tmp_file.'" can not be generated.');
+
+		$success = @rename($tmp_file, $complied_file);
+		if(!$success){
+			if(is_file($complied_file)) @unlink($complied_file);
+			$success = @rename($tmp_file, $complied_file);
+		}
+		if(!$success) err('Err: File "'.$complied_file.'" can not be generated.');
 		return $complied_file;
 	}
 
