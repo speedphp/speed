@@ -52,11 +52,14 @@ function inner_autoload($class){
 			include $file;
 			return;
 		}
-		$lowerfile = strtolower($file);
-		foreach(glob(APP_DIR.DS.'protected'.DS.$dir.DS.'*.php') as $file){
-			if(strtolower($file) === $lowerfile){
-				include $file;
-				return;
+		$phpfiles = glob(APP_DIR.DS.'protected'.DS.$dir.DS.'*.php');
+		if(is_array($phpfiles)){
+			$lowerfile = strtolower($file);
+			foreach($phpfiles as $file){
+				if(strtolower($file) === $lowerfile){
+					include $file;
+					return;
+				}
 			}
 		}
 	}
