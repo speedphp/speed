@@ -303,7 +303,18 @@ class Model{
 		}
 		
 		if(is_array($params) && !empty($params)){
-			foreach($params as $k=>&$v) $sth->bindParam($k, $v);
+            foreach($params as $k => &$v){
+                if(is_int($v)){
+                    $data_type = PDO::PARAM_INT;
+                }elseif(is_bool($v)){
+                    $data_type = PDO::PARAM_BOOL;
+                }elseif(is_null($v)){
+                    $data_type = PDO::PARAM_NULL;
+                }else{
+                    $data_type = PDO::PARAM_STR;
+                }
+                $sth->bindParam($k, $v, $data_type);
+            }
 		}
 
 		if($sth->execute())return $readonly ? $sth->fetchAll(PDO::FETCH_ASSOC) : $sth->rowCount();
