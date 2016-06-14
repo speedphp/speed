@@ -148,10 +148,11 @@ function is_available_classname($name){
 	return preg_match('/[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*/', $name);
 }
 
-function arg($name = null, $default = null) {
+function arg($name = null, $default = null, $trim = false) {
 	if($name){
 		if(!isset($_REQUEST[$name]))return $default;
 		$arg = $_REQUEST[$name];
+		if($trim)$arg = trim($arg);
 	}else{
 		$arg = $_REQUEST;
 	}
