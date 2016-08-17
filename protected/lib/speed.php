@@ -45,6 +45,7 @@ $__action     = isset($_REQUEST['a']) ? strtolower($_REQUEST['a']) : 'index';
 spl_autoload_register('inner_autoload');
 function inner_autoload($class){
 	GLOBAL $__module;
+	$class = str_replace("\\","/",$class);
 	foreach(array('model', 'include', 'controller'.(empty($__module)?'':DS.$__module)) as $dir){
 		$file = APP_DIR.DS.'protected'.DS.$dir.DS.$class.'.php';
 		if(file_exists($file)){
