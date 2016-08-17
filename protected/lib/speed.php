@@ -1,5 +1,4 @@
 <?php
-define('SPEED_VER', '0.1');
 set_error_handler("_err_handle");
 defined('DS') or define('DS', DIRECTORY_SEPARATOR);
 $GLOBALS = require(APP_DIR.DS.'protected'.DS.'config.php');
