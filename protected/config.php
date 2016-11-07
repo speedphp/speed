@@ -7,6 +7,7 @@ $config = array(
 	'rewrite' => array(
 		'admin/index.html' => 'admin/main/index',
 		'admin/<c>_<a>.html'    => 'admin/<c>/<a>', 
+        	'<m>/<c>/<a>'          => '<m>/<c>/<a>',
 		'<c>/<a>'          => '<c>/<a>',
 		'/'                => 'main/index',
 	),
