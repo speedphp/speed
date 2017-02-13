@@ -13,8 +13,6 @@ if($GLOBALS['debug']){
 }
 
 if(!empty($GLOBALS['rewrite'])){
-	if( ($pos = strpos( $_SERVER['REQUEST_URI'], '?' )) !== false )
-		parse_str( substr( $_SERVER['REQUEST_URI'], $pos + 1 ), $_GET );
 	foreach($GLOBALS['rewrite'] as $rule => $mapper){
 		if('/' == $rule)$rule = '';
 		if(0!==stripos($rule, 'http://'))
