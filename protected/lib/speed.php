@@ -484,7 +484,7 @@ function _err_router($msg){
 	}
 }
 function _err_handle($errno, $errstr, $errfile, $errline){
-	if(0 === error_reporting())return false;
+	if(0 === error_reporting() || 30711 === error_reporting())return false;
 	$msg = "ERROR";
 	if($errno == E_WARNING)$msg = "WARNING";
 	if($errno == E_NOTICE)$msg = "NOTICE";
