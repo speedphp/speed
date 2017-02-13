@@ -35,7 +35,7 @@ if(!empty($GLOBALS['rewrite'])){
 	}
 }
 
-$_REQUEST = array_merge($_POST, $_GET);
+$_REQUEST = array_merge($_GET, $_POST, $_COOKIE);
 $__module     = isset($_REQUEST['m']) ? strtolower($_REQUEST['m']) : '';
 $__controller = isset($_REQUEST['c']) ? strtolower($_REQUEST['c']) : 'main';
 $__action     = isset($_REQUEST['a']) ? strtolower($_REQUEST['a']) : 'index';
