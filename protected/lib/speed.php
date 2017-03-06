@@ -160,7 +160,7 @@ function arg($name = null, $default = null, $trim = false) {
 class Controller{
 	public $layout;
 	public $_auto_display = true;
-	private $_v;
+	protected $_v;
 	private $_data = array();
 
 	public function init(){}
