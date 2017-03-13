@@ -12,14 +12,20 @@ if($GLOBALS['debug']){
 	ini_set("log_errors", "On");
 }
 
+if((!empty($_SERVER['REQUEST_SCHEME']) && $_SERVER['REQUEST_SCHEME'] == "https") || (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == "on") || (!empty($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == 443)){
+	$GLOBALS['http_scheme'] = 'https://';
+}else{
+	$GLOBALS['http_scheme'] = 'http://';
+}
+
 if(!empty($GLOBALS['rewrite'])){
 	foreach($GLOBALS['rewrite'] as $rule => $mapper){
 		if('/' == $rule)$rule = '';
-		if(0!==stripos($rule, 'http://'))
-			$rule = 'http://'.$_SERVER['HTTP_HOST'].rtrim(dirname($_SERVER["SCRIPT_NAME"]), '/\\') .'/'.$rule;
-		$rule = '/'.str_ireplace(array('\\\\', 'http://', '/', '<', '>',  '.'), 
+		if(0!==stripos($rule, $GLOBALS['http_scheme']))
+			$rule = $GLOBALS['http_scheme'].$_SERVER['HTTP_HOST'].rtrim(dirname($_SERVER["SCRIPT_NAME"]), '/\\') .'/'.$rule;
+		$rule = '/'.str_ireplace(array('\\\\', $GLOBALS['http_scheme'], '/', '<', '>',  '.'), 
 			array('', '', '\/', '(?P<', '>\w+)', '\.'), $rule).'/i';
-		if(preg_match($rule, 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'], $matchs)){
+		if(preg_match($rule, $GLOBALS['http_scheme'].$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'], $matchs)){
 			$route = explode("/", $mapper);
 			
 			if(isset($route[2])){
@@ -119,8 +125,8 @@ function url($c = 'main', $a = 'index', $param = array()){
 							(!empty($_args) ? '?'.http_build_query($_args) : '');
 					}
 					
-					if(0!==stripos($urlArray[$url], 'http://')) 
-						$urlArray[$url] = 'http://'.$_SERVER['HTTP_HOST'].rtrim(dirname($_SERVER["SCRIPT_NAME"]), '/\\') .'/'.$urlArray[$url];
+					if(0!==stripos($urlArray[$url], $GLOBALS['http_scheme'])) 
+						$urlArray[$url] = $GLOBALS['http_scheme'].$_SERVER['HTTP_HOST'].rtrim(dirname($_SERVER["SCRIPT_NAME"]), '/\\') .'/'.$urlArray[$url];
 					$rule = str_ireplace(array('<m>', '<c>', '<a>'), '', $rule);
 					if(count($param) == preg_match_all('/<\w+>/is', $rule, $_match)){
 						return $urlArray[$url];
