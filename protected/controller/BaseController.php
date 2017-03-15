@@ -16,7 +16,7 @@ class BaseController extends Controller{
         exit;
     }
 	
-	//public static function err404($controller_name, $action_name){
+	//public static function err404($module, $controller, $action, $msg){
 	//	header("HTTP/1.0 404 Not Found");
 	//	exit;
 	//}
