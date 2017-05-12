@@ -330,6 +330,9 @@ class Model{
 	public function dbInstance($db_config, $db_config_key, $force_replace = false){
 		if($force_replace || empty($GLOBALS['mysql_instances'][$db_config_key])){
 			try {
+				if(!class_exists("PDO") || !in_array("mysql",PDO::getAvailableDrivers(), true)){
+					err('Database Err: PDO or PDO_MYSQL doesn\'t exist!');
+				}
 				$GLOBALS['mysql_instances'][$db_config_key] = new PDO('mysql:dbname='.$db_config['MYSQL_DB'].';host='.$db_config['MYSQL_HOST'].';port='.$db_config['MYSQL_PORT'], $db_config['MYSQL_USER'], $db_config['MYSQL_PASS'], array(PDO::MYSQL_ATTR_INIT_COMMAND=>'SET NAMES \''.$db_config['MYSQL_CHARSET'].'\''));
 			}catch(PDOException $e){err('Database Err: '.$e->getMessage());}
 		}
