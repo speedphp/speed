@@ -20,7 +20,7 @@ if((!empty($_SERVER['REQUEST_SCHEME']) && $_SERVER['REQUEST_SCHEME'] == "https")
 
 if(!empty($GLOBALS['rewrite'])){
 	foreach($GLOBALS['rewrite'] as $rule => $mapper){
-		if('/' == $rule)$rule = '';
+		if('/' == $rule)$rule = '/$';
 		if(0!==stripos($rule, $GLOBALS['http_scheme']))
 			$rule = $GLOBALS['http_scheme'].$_SERVER['HTTP_HOST'].rtrim(dirname($_SERVER["SCRIPT_NAME"]), '/\\') .'/'.$rule;
 		$rule = '/'.str_ireplace(array('\\\\', $GLOBALS['http_scheme'], '/', '<', '>',  '.'), 
