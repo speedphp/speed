@@ -106,37 +106,35 @@ function url($c = 'main', $a = 'index', $param = array()){
 	}
 
 	if(!empty($GLOBALS['rewrite'])){
-		static $urlArray=array();
-		if(!isset($urlArray[$url])){
+		if(!isset($GLOBALS['url_array_instances'][$url])){
 			foreach($GLOBALS['rewrite'] as $rule => $mapper){
-				$mapper = '/^'.str_ireplace(array('/', '<a>', '<c>', '<m>'), 
+				$mapper = '/^'.str_ireplace(array('/', '<a>', '<c>', '<m>'),
 					array('\/', '(?P<a>\w+)', '(?P<c>\w+)', '(?P<m>\w+)'), $mapper).'/i';
-				
 				if(preg_match($mapper, $route, $matchs)){
-					$urlArray[$url] = str_ireplace(array('<a>', '<c>', '<m>'), array($a, $c, $m), $rule);
+					$GLOBALS['url_array_instances'][$url] = str_ireplace(array('<a>', '<c>', '<m>'), array($a, $c, $m), $rule);
 					if(!empty($param)){
 						$_args = array();
 						foreach($param as $argkey => $arg){
 							$count = 0;
-							$urlArray[$url] = str_ireplace('<'.$argkey.'>', $arg, $urlArray[$url], $count);
+							$GLOBALS['url_array_instances'][$url] = str_ireplace('<'.$argkey.'>', $arg, $GLOBALS['url_array_instances'][$url], $count);
 							if(!$count)$_args[$argkey] = $arg;
 						}
-						$urlArray[$url] = preg_replace('/<\w+>/', '', $urlArray[$url]).
+						$GLOBALS['url_array_instances'][$url] = preg_replace('/<\w+>/', '', $GLOBALS['url_array_instances'][$url]).
 							(!empty($_args) ? '?'.http_build_query($_args) : '');
 					}
 					
-					if(0!==stripos($urlArray[$url], $GLOBALS['http_scheme'])) 
-						$urlArray[$url] = $GLOBALS['http_scheme'].$_SERVER['HTTP_HOST'].rtrim(dirname($_SERVER["SCRIPT_NAME"]), '/\\') .'/'.$urlArray[$url];
+					if(0!==stripos($GLOBALS['url_array_instances'][$url], $GLOBALS['http_scheme'])) 
+						$GLOBALS['url_array_instances'][$url] = $GLOBALS['http_scheme'].$_SERVER['HTTP_HOST'].rtrim(dirname($_SERVER["SCRIPT_NAME"]), '/\\') .'/'.$GLOBALS['url_array_instances'][$url];
 					$rule = str_ireplace(array('<m>', '<c>', '<a>'), '', $rule);
 					if(count($param) == preg_match_all('/<\w+>/is', $rule, $_match)){
-						return $urlArray[$url];
+						return $GLOBALS['url_array_instances'][$url];
 					}
 					//break;
 				}
 			}
-			return isset($urlArray[$url]) ? $urlArray[$url] : $url;
+			return isset($GLOBALS['url_array_instances'][$url]) ? $GLOBALS['url_array_instances'][$url] : $url;
 		}
-		return $urlArray[$url];
+		return $GLOBALS['url_array_instances'][$url];
 	}
 	return $url;
 }
