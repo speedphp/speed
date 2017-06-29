@@ -109,7 +109,7 @@ function url($c = 'main', $a = 'index', $param = array()){
 		static $urlArray=array();
 		if(!isset($urlArray[$url])){
 			foreach($GLOBALS['rewrite'] as $rule => $mapper){
-				$mapper = '/'.str_ireplace(array('/', '<a>', '<c>', '<m>'), 
+				$mapper = '/^'.str_ireplace(array('/', '<a>', '<c>', '<m>'), 
 					array('\/', '(?P<a>\w+)', '(?P<c>\w+)', '(?P<m>\w+)'), $mapper).'/i';
 				
 				if(preg_match($mapper, $route, $matchs)){
