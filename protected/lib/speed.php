@@ -131,7 +131,7 @@ function url($c = 'main', $a = 'index', $param = array()){
 					if(count($param) == preg_match_all('/<\w+>/is', $rule, $_match)){
 						return $urlArray[$url];
 					}
-					break;
+					//break;
 				}
 			}
 			return isset($urlArray[$url]) ? $urlArray[$url] : $url;
