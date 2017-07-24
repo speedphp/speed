@@ -108,28 +108,33 @@ function url($c = 'main', $a = 'index', $param = array()){
 	if(!empty($GLOBALS['rewrite'])){
 		if(!isset($GLOBALS['url_array_instances'][$url])){
 			foreach($GLOBALS['rewrite'] as $rule => $mapper){
-				$mapper = '/^'.str_ireplace(array('/', '<a>', '<c>', '<m>'),
-					array('\/', '(?P<a>\w+)', '(?P<c>\w+)', '(?P<m>\w+)'), $mapper).'/i';
+				$mapper = '/^'.str_ireplace(array('/', '<a>', '<c>', '<m>'), array('\/', '(?P<a>\w+)', '(?P<c>\w+)', '(?P<m>\w+)'), $mapper).'/i';
 				if(preg_match($mapper, $route, $matchs)){
-					$GLOBALS['url_array_instances'][$url] = str_ireplace(array('<a>', '<c>', '<m>'), array($a, $c, $m), $rule);
-					if(!empty($param)){
-						$_args = array();
-						foreach($param as $argkey => $arg){
-							$count = 0;
-							$GLOBALS['url_array_instances'][$url] = str_ireplace('<'.$argkey.'>', $arg, $GLOBALS['url_array_instances'][$url], $count);
-							if(!$count)$_args[$argkey] = $arg;
+					$rule = str_ireplace(array('<a>', '<c>', '<m>'), array($a, $c, $m), $rule);
+					$match_param_count = 0;
+					$param_in_rule = substr_count($rule, '<');
+					if(!empty($param) && $param_in_rule > 0){
+						foreach($param as $param_key => $param_v){
+							if(false !== stripos($rule, '<'.$param_key.'>'))$match_param_count++;
 						}
-						$GLOBALS['url_array_instances'][$url] = preg_replace('/<\w+>/', '', $GLOBALS['url_array_instances'][$url]).
-							(!empty($_args) ? '?'.http_build_query($_args) : '');
 					}
-					
-					if(0!==stripos($GLOBALS['url_array_instances'][$url], $GLOBALS['http_scheme'])) 
-						$GLOBALS['url_array_instances'][$url] = $GLOBALS['http_scheme'].$_SERVER['HTTP_HOST'].rtrim(dirname($_SERVER["SCRIPT_NAME"]), '/\\') .'/'.$GLOBALS['url_array_instances'][$url];
-					$rule = str_ireplace(array('<m>', '<c>', '<a>'), '', $rule);
-					if(count($param) == preg_match_all('/<\w+>/is', $rule, $_match)){
+					if($param_in_rule == $match_param_count){
+						$GLOBALS['url_array_instances'][$url] = $rule;
+						if(!empty($param)){
+							$_args = array();
+							foreach($param as $arg_key => $arg){
+								$count = 0;
+								$GLOBALS['url_array_instances'][$url] = str_ireplace('<'.$arg_key.'>', $arg, $GLOBALS['url_array_instances'][$url], $count);
+								if(!$count)$_args[$arg_key] = $arg;
+							}
+							$GLOBALS['url_array_instances'][$url] = preg_replace('/<\w+>/', '', $GLOBALS['url_array_instances'][$url]). (!empty($_args) ? '?'.http_build_query($_args) : '');
+						}
+						
+						if(0!==stripos($GLOBALS['url_array_instances'][$url], $GLOBALS['http_scheme'])){
+							$GLOBALS['url_array_instances'][$url] = $GLOBALS['http_scheme'].$_SERVER['HTTP_HOST'].rtrim(dirname($_SERVER["SCRIPT_NAME"]), '/\\') .'/'.$GLOBALS['url_array_instances'][$url];
+						}
 						return $GLOBALS['url_array_instances'][$url];
 					}
-					break;
 				}
 			}
 			return isset($GLOBALS['url_array_instances'][$url]) ? $GLOBALS['url_array_instances'][$url] : $url;
