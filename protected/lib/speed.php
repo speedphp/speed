@@ -129,7 +129,7 @@ function url($c = 'main', $a = 'index', $param = array()){
 					if(count($param) == preg_match_all('/<\w+>/is', $rule, $_match)){
 						return $GLOBALS['url_array_instances'][$url];
 					}
-					//break;
+					break;
 				}
 			}
 			return isset($GLOBALS['url_array_instances'][$url]) ? $GLOBALS['url_array_instances'][$url] : $url;
