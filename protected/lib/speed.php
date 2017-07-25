@@ -24,7 +24,7 @@ if(!empty($GLOBALS['rewrite'])){
 		if(0!==stripos($rule, $GLOBALS['http_scheme']))
 			$rule = $GLOBALS['http_scheme'].$_SERVER['HTTP_HOST'].rtrim(dirname($_SERVER["SCRIPT_NAME"]), '/\\') .'/'.$rule;
 		$rule = '/'.str_ireplace(array('\\\\', $GLOBALS['http_scheme'], '/', '<', '>',  '.'), 
-			array('', '', '\/', '(?P<', '>\w+)', '\.'), $rule).'/i';
+			array('', '', '\/', '(?P<', '>[-\w]+)', '\.'), $rule).'/i';
 		if(preg_match($rule, $GLOBALS['http_scheme'].$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'], $matchs)){
 			$route = explode("/", $mapper);
 			
