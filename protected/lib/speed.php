@@ -427,19 +427,19 @@ class View{
 		$pattern_map = array(
 			'<{\*([\s\S]+?)\*}>'      => '<?php /* $1*/?>',
 			'<{#(.*?)}>'              => '<?php echo $1; ?>',
-			'(<{((?!}>).)*?)(\$[\w\_\"\'\[\]]+?)\.(\w+)(.*?}>)' => '$1$3[\'$4\']$5',
+			'(<{((?!}>).)*?)(\$[\w\"\'\[\]]+?)\.(\w+)(.*?}>)' => '$1$3[\'$4\']$5',
 			'(<{.*?)(\$(\w+)@(index|iteration|first|last|total))+(.*?}>)' => '$1$_foreach_$3_$4$5',
-			'<{(\$[\$\w\.\_\"\'\[\]]+?)\snofilter\s*}>'          => '<?php echo $1; ?>',
-			'<{(\$[\$\w\_\"\'\[\]]+?)\s*=(.*?)\s*}>'           => '<?php $1 =$2; ?>',
-			'<{(\$[\$\w\.\_\"\'\[\]]+?)\s*}>'          => '<?php echo htmlspecialchars($1, ENT_QUOTES, "UTF-8"); ?>',
+			'<{(\$[\$\w\.\"\'\[\]]+?)\snofilter\s*}>'          => '<?php echo $1; ?>',
+			'<{(\$[\$\w\"\'\[\]]+?)\s*=(.*?)\s*}>'           => '<?php $1 =$2; ?>',
+			'<{(\$[\$\w\.\"\'\[\]]+?)\s*}>'          => '<?php echo htmlspecialchars($1, ENT_QUOTES, "UTF-8"); ?>',
 			'<{if\s*(.+?)}>'          => '<?php if ($1) : ?>',
 			'<{else\s*if\s*(.+?)}>'   => '<?php elseif ($1) : ?>',
 			'<{else}>'                => '<?php else : ?>',
 			'<{break}>'               => '<?php break; ?>',
 			'<{continue}>'            => '<?php continue; ?>',
 			'<{\/if}>'                => '<?php endif; ?>',
-			'<{foreach\s*(\$[\$\w\.\_\"\'\[\]]+?)\s*as(\s*)\$([\w\_\"\'\[\]]+?)}>' => $foreach_inner_before.'<?php foreach( $1 as $$3 ) : ?>'.$foreach_inner_after,
-			'<{foreach\s*(\$[\$\w\.\_\"\'\[\]]+?)\s*as\s*(\$[\w\_\"\'\[\]]+?)\s*=>\s*\$([\w\_\"\'\[\]]+?)}>'  => $foreach_inner_before.'<?php foreach( $1 as $2 => $$3 ) : ?>'.$foreach_inner_after,
+			'<{foreach\s*(\$[\$\w\.\"\'\[\]]+?)\s*as(\s*)\$([\w\"\'\[\]]+?)}>' => $foreach_inner_before.'<?php foreach( $1 as $$3 ) : ?>'.$foreach_inner_after,
+			'<{foreach\s*(\$[\$\w\.\"\'\[\]]+?)\s*as\s*(\$[\w\"\'\[\]]+?)\s*=>\s*\$([\w\"\'\[\]]+?)}>'  => $foreach_inner_before.'<?php foreach( $1 as $2 => $$3 ) : ?>'.$foreach_inner_after,
 			'<{\/foreach}>'           => '<?php endforeach; ?>',
 			'<{include\s*file=(.+?)}>'=> '<?php include $_view_obj->compile($1); ?>',
 		);
@@ -455,7 +455,7 @@ class View{
 	}
 	
 	private function _compile_function($template_data){
-		$pattern = '/'.$this->left_delimiter.'([\w_]+)\s*(.*?)'.$this->right_delimiter.'/';
+		$pattern = '/'.$this->left_delimiter.'(\w+)\s*(.*?)'.$this->right_delimiter.'/';
 		return preg_replace_callback($pattern, array($this, '_compile_function_callback'), $template_data);
 	}
 	
@@ -464,7 +464,7 @@ class View{
 		$sysfunc = preg_replace('/\((.*)\)\s*$/', '<?php echo '.$matches[1].'($1);?>', $matches[2], -1, $count);
 		if($count)return $sysfunc;
 		
-		$pattern_inner = '/\b([\w_\-]+?)\s*=\s*(\$[\w"\'\]\[\-_>\$]+|"[^"\\\\]*(?:\\\\.[^"\\\\]*)*"|\'[^\'\\\\]*(?:\\\\.[^\'\\\\]*)*\'|([\w_\->]+))\s*?/'; 
+		$pattern_inner = '/\b([-\w]+?)\s*=\s*(\$[\w"\'\]\[\-_>\$]+|"[^"\\\\]*(?:\\\\.[^"\\\\]*)*"|\'[^\'\\\\]*(?:\\\\.[^\'\\\\]*)*\'|([->\w]+))\s*?/'; 
 		$params = "";
 		if(preg_match_all($pattern_inner, $matches[2], $matches_inner, PREG_SET_ORDER)){
 			$params = "array(";
