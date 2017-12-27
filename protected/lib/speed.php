@@ -422,7 +422,7 @@ class View{
 	}
 
 	private function _compile_struct($template_data){
-		$foreach_inner_before = '<?php $_foreach_$3_counter = 0; $_foreach_$3_total = count($1);?>';
+		$foreach_inner_before = '<?php if(!empty($1)){ $_foreach_$3_counter = 0; $_foreach_$3_total = count($1);?>';
 		$foreach_inner_after  = '<?php $_foreach_$3_index = $_foreach_$3_counter;$_foreach_$3_iteration = $_foreach_$3_counter + 1;$_foreach_$3_first = ($_foreach_$3_counter == 0);$_foreach_$3_last = ($_foreach_$3_counter == $_foreach_$3_total - 1);$_foreach_$3_counter++;?>';
 		$pattern_map = array(
 			'<{\*([\s\S]+?)\*}>'      => '<?php /* $1*/?>',
@@ -440,7 +440,7 @@ class View{
 			'<{\/if}>'                => '<?php endif; ?>',
 			'<{foreach\s*(\$[\$\w\.\"\'\[\]]+?)\s*as(\s*)\$([\w\"\'\[\]]+?)}>' => $foreach_inner_before.'<?php foreach( $1 as $$3 ) : ?>'.$foreach_inner_after,
 			'<{foreach\s*(\$[\$\w\.\"\'\[\]]+?)\s*as\s*(\$[\w\"\'\[\]]+?)\s*=>\s*\$([\w\"\'\[\]]+?)}>'  => $foreach_inner_before.'<?php foreach( $1 as $2 => $$3 ) : ?>'.$foreach_inner_after,
-			'<{\/foreach}>'           => '<?php endforeach; ?>',
+			'<{\/foreach}>'           => '<?php endforeach; }?>',
 			'<{include\s*file=(.+?)}>'=> '<?php include $_view_obj->compile($1); ?>',
 		);
 		$pattern = $replacement = array();
