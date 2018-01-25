@@ -4,7 +4,7 @@ class MainController extends BaseController {
 	function actionIndex(){
 		// 连个hello world都木有？
 
-		// 回答：页面自动输出，请看default_index.html
+		// 回答：页面自动输出，请看main_index.html
 	}
 	
 	// 接收提交表单
