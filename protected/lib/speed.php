@@ -174,7 +174,7 @@ class Controller{
 
 	public function init(){}
 	public function __construct(){$this->init();}
-	public function __get($name){return $this->_data[$name];}
+	public function &__get($name){return $this->_data[$name];}
 	public function __set($name, $value){$this->_data[$name] = $value;}
 	
 	public function display($tpl_name, $return = false){
