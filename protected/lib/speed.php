@@ -91,7 +91,12 @@ if($controller_obj->_auto_display){
 function url($c = 'main', $a = 'index', $param = array()){
 	if(is_array($c)){
 		$param = $c;
-		$c = $param['c']; unset($param['c']);
+		if(isset($param['m'])) {
+                    $c = $param['m'] . '/' . $param['c'];
+                    unset($param['m'], $param['c']);
+                } else {
+                    $c = $param['c']; unset($param['c']);
+                }
 		$a = $param['a']; unset($param['a']);
 	}
 	$params = empty($param) ? '' : '&'.http_build_query($param);
