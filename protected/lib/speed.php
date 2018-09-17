@@ -275,7 +275,7 @@ class Model{
 		$this->page = null;
 		if($total > $pageSize){
 			$total_page = ceil($total / $pageSize);
-			$page = min(intval(max($page, 1)), $total);
+			$page = min(intval(max($page, 1)), $total_page);
 			$this->page = array(
 				'total_count' => $total, 
 				'page_size'   => $pageSize,
