@@ -363,6 +363,9 @@ class Model{
 
 			$result["_where"] = " WHERE ". $sql;
 			$result["_bindParams"] = $conditions;
+		} else if(is_string($conditions) && !empty($conditions)){
+			$result["_where"] = " WHERE ". $conditions;
+			$result["_bindParams"] = array();
 		}
 		return $result;
 	}
